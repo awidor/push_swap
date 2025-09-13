@@ -1,33 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   push_swap.h                                        :+:      :+:    :+:   */
+/*   push_swap_utils.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: awidor <awidor@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/09/11 20:43:42 by awidor            #+#    #+#             */
-/*   Updated: 2025/09/13 20:07:18 by awidor           ###   ########.fr       */
+/*   Created: 2025/09/13 17:27:41 by awidor            #+#    #+#             */
+/*   Updated: 2025/09/13 20:07:06 by awidor           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PUSH_SWAP_H
-# define PUSH_SWAP_H
-# include "libft/libft.h"
-typedef struct s_state
+#include "push_swap.h"
+
+int	find_min_index(int *arr, int n)
 {
-	int	*a;
-	int	*b;
-	int	a_size;
-	int	b_size;
-}	t_state;
+	int	i;
+	int	min_i;
 
-void	sa(t_state *s);
-void	pb(t_state *s);
-void	pa(t_state *s);
-void	ra(t_state *s);
-void	rra(t_state *s);
-
-int		find_min_index(int *arr, int n);
-void	selection_sort_with_ops(t_state *s);
-
-#endif
+	min_i = 0;
+	i = 1;
+	while (i < n)
+	{
+		if (arr[i] < arr[min_i])
+			min_i = i;
+		i++;
+	}
+	return (min_i);
+}

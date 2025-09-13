@@ -6,7 +6,7 @@
 /*   By: awidor <awidor@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/11 17:41:52 by awidor            #+#    #+#             */
-/*   Updated: 2025/09/13 15:52:15 by awidor           ###   ########.fr       */
+/*   Updated: 2025/09/13 20:07:09 by awidor           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,32 @@ int error(void)
 {
     ft_putstr_fd("Error\n", 2);
     return (0);
+}
+
+void	selection_sort_with_ops(t_state *s)
+{
+	int	min_i;
+	int	k;
+
+	while (s->a_size > 0)
+	{
+		min_i = find_min_index(s->a, s->a_size);
+		if (min_i <= s->a_size / 2)
+		{
+			k = 0;
+			while (k++ < min_i)
+				ra(s);
+		}
+		else
+		{
+			k = 0;
+			while (k++ < (s->a_size - min_i))
+				rra(s);
+		}
+		pb(s);
+	}
+	while (s->b_size > 0)
+		pa(s);
 }
 
 int main(int argc, char **argv)
@@ -38,6 +64,28 @@ int main(int argc, char **argv)
         i++;
     }
     values[i] = '\0';
+
+    t_state	s;
+    int		count;
+    i = 0;
+    count = argc - 1;
+    s.a = malloc(sizeof(int) * count);
+    s.b = malloc(sizeof(int) * count);
+    if (!s.a || !s.b)
+        return (error());
+    s.a_size = count;
+    s.b_size = 0;
+    i = 0;
+    while (i < count)
+    {
+        s.a[i] = ft_atoi(argv[i + 1]);
+        i++;
+    }
+    selection_sort_with_ops(&s);
+    free(s.a);
+    free(s.b);
+    free(values);
+    return (0);
 }
 
 
