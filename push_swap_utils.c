@@ -6,7 +6,7 @@
 /*   By: awidor <awidor@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/13 17:27:41 by awidor            #+#    #+#             */
-/*   Updated: 2025/09/14 14:53:57 by awidor           ###   ########.fr       */
+/*   Updated: 2025/09/14 16:26:11 by awidor           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ void do_normalize(int *arr, int *sorted, int *normalized, int n)
 	
 }
 
-void normilize_array(int *arr, int n)
+void normalize_array(int *arr, int n)
 {
 	int i;
 	int *sorted;

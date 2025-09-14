@@ -6,23 +6,11 @@
 /*   By: awidor <awidor@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/13 17:26:36 by awidor            #+#    #+#             */
-/*   Updated: 2025/09/13 20:07:04 by awidor           ###   ########.fr       */
+/*   Updated: 2025/09/14 16:45:28 by awidor           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
-
-void	sa(t_state *s)
-{
-	int	tmp;
-
-	if (s->a_size < 2)
-		return ;
-	tmp = s->a[0];
-	s->a[0] = s->a[1];
-	s->a[1] = tmp;
-	ft_putstr_fd("sa\n", 1);
-}
 
 void	pb(t_state *s)
 {
