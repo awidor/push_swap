@@ -6,7 +6,7 @@
 /*   By: awidor <awidor@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/11 20:43:42 by awidor            #+#    #+#             */
-/*   Updated: 2025/09/13 20:07:18 by awidor           ###   ########.fr       */
+/*   Updated: 2025/09/14 14:34:40 by awidor           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,5 +29,7 @@ void	rra(t_state *s);
 
 int		find_min_index(int *arr, int n);
 void	selection_sort_with_ops(t_state *s);
+void	bubble_sort(int *arr, int n);
+void	normalize_array(int *arr, int n);
 
 #endif
