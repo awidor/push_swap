@@ -6,85 +6,97 @@
 /*   By: awidor <awidor@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/13 17:27:41 by awidor            #+#    #+#             */
-/*   Updated: 2025/09/14 16:26:11 by awidor           ###   ########.fr       */
+/*   Updated: 2025/09/14 18:46:33 by awidor           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-int	find_min_index(int *arr, int n)
+int	limit_check(const char *nptr)
 {
-	int	i;
-	int	min_i;
+	size_t	i;
+	int		sign;
+	long	res;
+	int		digit;
 
-	min_i = 0;
-	i = 1;
-	while (i < n)
+	i = 0;
+	sign = 1;
+	res = 0;
+	while (nptr[i] == ' ' || (nptr[i] >= '\t' && nptr[i] <= '\r'))
+		i++;
+	if (nptr[i] == '+' || nptr[i] == '-')
 	{
-		if (arr[i] < arr[min_i])
-			min_i = i;
+		sign = 1 - 2 * (nptr[i] == '-');
 		i++;
 	}
-	return (min_i);
-}
-void bubble_sort(int *arr, int n)
-{
-    int i;
-    int j;
-    int tmp;
-    
-    i = 0;
-    while (i < n - 1)
-    {
-        j = 0;
-        while (j < n - i - 1)
-        {
-            if (arr[j] > arr[j + 1])
-            {
-                tmp = arr[j];
-                arr[j] = arr[j + 1];
-                arr[j + 1] = tmp;
-            }
-            j++;
-        }
-        i++;
-    }
+	while (ft_isdigit(nptr[i]))
+	{
+		digit = nptr[i++] - '0';
+		if ((sign > 0 && res > (INT_MAX - digit) / 10) || (sign < 0
+				&& res > (INT_MIN + digit) / -10))
+			return (1);
+		res = res * 10 + digit;
+	}
+	return (0);
 }
 
-void do_normalize(int *arr, int *sorted, int *normalized, int n)
+void	bubble_sort(int *arr, int n)
 {
-	int i;
-	int j;
+	int	i;
+	int	j;
+	int	tmp;
+
 	i = 0;
-	j = 0;
-
-	while(i < n)
+	while (i < n - 1)
 	{
 		j = 0;
-		while (j < n)
+		while (j < n - i - 1)
 		{
-			if(arr[i] == sorted[j])
+			if (arr[j] > arr[j + 1])
 			{
-				normalized[i] = j;
-				break;
+				tmp = arr[j];
+				arr[j] = arr[j + 1];
+				arr[j + 1] = tmp;
 			}
 			j++;
 		}
 		i++;
 	}
-	
 }
 
-void normalize_array(int *arr, int n)
+void	do_normalize(int *arr, int *sorted, int *normalized, int n)
 {
-	int i;
-	int *sorted;
-	int *normalized;
+	int	i;
+	int	j;
+
+	i = 0;
+	j = 0;
+	while (i < n)
+	{
+		j = 0;
+		while (j < n)
+		{
+			if (arr[i] == sorted[j])
+			{
+				normalized[i] = j;
+				break ;
+			}
+			j++;
+		}
+		i++;
+	}
+}
+
+void	normalize_array(int *arr, int n)
+{
+	int	i;
+	int	*sorted;
+	int	*normalized;
+
 	sorted = malloc(sizeof(int) * n);
 	normalized = malloc(sizeof(int) * n);
 	if (sorted == NULL || normalized == NULL)
-		return;
-
+		return ;
 	i = 0;
 	while (i < n)
 	{
@@ -102,4 +114,3 @@ void normalize_array(int *arr, int n)
 	free(sorted);
 	free(normalized);
 }
-
