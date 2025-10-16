@@ -6,7 +6,7 @@
 /*   By: awidor <awidor@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/11 17:41:52 by awidor            #+#    #+#             */
-/*   Updated: 2025/09/14 18:44:26 by awidor           ###   ########.fr       */
+/*   Updated: 2025/10/16 09:08:19 by awidor           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,6 @@
 #include <stdbool.h>
 #include <stdlib.h>
 #include <unistd.h>
-
-int	DEBUG = 1;
-#define YEL "\x1B[33m"
-#define RESET "\x1B[0m"
 
 int	error(void)
 {
@@ -46,72 +42,89 @@ int	detect_duplicates(int *arr, int n)
 	return (0);
 }
 
-int	main(int argc, char **argv)
+int	input_validation(int argc, char **argv)
 {
-	int		i;
-	int		*values;
-	t_state	s;
-	int		count;
+	int	i;
 
 	i = 0;
 	if (argc < 2)
 		return (error());
-	if (DEBUG)
-	{
-		ft_printf(YEL "Warning: DEBUG mode is enabled!\n" RESET);
-		ft_printf("DEBUG: argc: %d\n", argc);
-	}
 	while (i < argc - 1)
 	{
 		if (limit_check(argv[i + 1]))
-		{
-			if (DEBUG)
-			{
-				ft_printf("DEBUG: Limit check failed\n");
-				return (error());
-			}
-		}
+			return (error());
 		i++;
 	}
-	values = malloc((argc) * sizeof(int));
-	if (values == NULL)
+	return (0);
+}
+
+int parse(int argc, char **argv, int **values)
+{
+	int i;
+	i = 0;
+	
+	*values = malloc(sizeof(int) * argc - 1);
+	if (*values == NULL)
 		return (error());
 	while (i < argc - 1)
 	{
-		values[i] = ft_atoi(argv[i + 1]);
+		(*values)[i] = ft_atoi(argv[i + 1]);
 		i++;
 	}
-	values[i] = '\0';
+	(*values)[i] = '\0';
+	return (0);
+}
+
+int init(t_state *s, int argc, char **argv, int *count)
+{
+	int i;
 	i = 0;
-	count = argc - 1;
-	s.a = malloc(sizeof(int) * count);
-	s.b = malloc(sizeof(int) * count);
-	if (!s.a || !s.b)
+
+	*count = argc - 1;
+	s->a = malloc(sizeof(int) * *count);
+	s->b = malloc(sizeof(int) * *count);
+	if (!s->a || !s->b)
 		return (error());
-	s.a_size = count;
-	s.b_size = 0;
+	s->a_size = *count;
+	s->b_size = 0;
 	i = 0;
-	while (i < count)
+	while (i < *count)
 	{
-		s.a[i] = ft_atoi(argv[i + 1]);
+		s->a[i] = ft_atoi(argv[i + 1]);
 		i++;
 	}
+	return (0);
+}
+
+int	main(int argc, char **argv)
+{
+	t_state	s;
+	int		*values;
+	int		count;
+
+	if (input_validation(argc, argv))
+		return (1);
+
+	if (parse(argc, argv, &values))
+		return (error());
+	if (init(&s, argc, argv, &count))
+		return (error());
 	if (detect_duplicates(s.a, count))
-	{
-		if (DEBUG)
-			ft_printf("DEBUG: Duplicates detected\n");
 		return (error());
+	if (argc - 1 <= 5)
+	{
+		if (count == 2)
+			sort_2(&s);
+		else if (count == 3)
+			sort_3(&s);
+		else
+			sort_4_5(&s);
+		free(s.a);
+		free(s.b);
+		free(values);
+		return (0);
 	}
 	normalize_array(s.a, count);
-	i = 0;
-	while (i < count)
-	{
-		if (DEBUG)
-		{
-			ft_printf("DEBUG: s.a[%d] = %d\n", i, s.a[i]);
-			i++;
-		}
-	}
 	radix_sort(&s);
 	free(s.a);
 	free(s.b);

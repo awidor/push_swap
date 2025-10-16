@@ -6,7 +6,7 @@
 /*   By: awidor <awidor@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/13 17:26:36 by awidor            #+#    #+#             */
-/*   Updated: 2025/09/14 16:45:28 by awidor           ###   ########.fr       */
+/*   Updated: 2025/10/16 04:43:22 by awidor           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,4 +94,16 @@ void	rra(t_state *s)
 	}
 	s->a[0] = last;
 	ft_putstr_fd("rra\n", 1);
+}
+
+void	sa(t_state *s)
+{
+	int tmp;
+
+	if (s->a_size < 2)
+		return ;
+	tmp = s->a[0];
+	s->a[0] = s->a[1];
+	s->a[1] = tmp;
+	ft_putstr_fd("sa\n", 1);
 }

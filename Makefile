@@ -6,14 +6,14 @@
 #    By: awidor <awidor@student.42heilbronn.de>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/09/11 16:43:37 by awidor            #+#    #+#              #
-#    Updated: 2025/09/14 18:14:36 by awidor           ###   ########.fr        #
+#    Updated: 2025/10/16 04:43:19 by awidor           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC = cc
 CFLAGS = -Wall -Wextra -Werror
 NAME = push_swap
-SRC = push_swap.c push_swap_ops.c push_swap_utils.c push_swap_radix.c
+SRC = push_swap.c push_swap_ops.c push_swap_utils.c push_swap_radix.c push_swap_low.c
 OBJ = $(SRC:.c=.o)
 HEADER = push_swap.h
 MAKE := make
