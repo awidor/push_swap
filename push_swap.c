@@ -6,19 +6,16 @@
 /*   By: awidor <awidor@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/11 17:41:52 by awidor            #+#    #+#             */
-/*   Updated: 2025/10/16 09:08:19 by awidor           ###   ########.fr       */
+/*   Updated: 2025/10/16 10:48:18 by awidor           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
-#include <stdbool.h>
-#include <stdlib.h>
-#include <unistd.h>
 
-int	error(void)
+void	error(void)
 {
 	ft_putstr_fd("Error\n", 2);
-	return (1);
+	exit(1);
 }
 
 int	detect_duplicates(int *arr, int n)
@@ -48,11 +45,11 @@ int	input_validation(int argc, char **argv)
 
 	i = 0;
 	if (argc < 2)
-		return (error());
+		return (1);
 	while (i < argc - 1)
 	{
 		if (limit_check(argv[i + 1]))
-			return (error());
+			error();
 		i++;
 	}
 	return (0);
@@ -63,9 +60,9 @@ int parse(int argc, char **argv, int **values)
 	int i;
 	i = 0;
 	
-	*values = malloc(sizeof(int) * argc - 1);
+	*values = malloc(sizeof(int) * (argc - 1));
 	if (*values == NULL)
-		return (error());
+		error();
 	while (i < argc - 1)
 	{
 		(*values)[i] = ft_atoi(argv[i + 1]);
@@ -84,7 +81,7 @@ int init(t_state *s, int argc, char **argv, int *count)
 	s->a = malloc(sizeof(int) * *count);
 	s->b = malloc(sizeof(int) * *count);
 	if (!s->a || !s->b)
-		return (error());
+		error();
 	s->a_size = *count;
 	s->b_size = 0;
 	i = 0;
@@ -96,6 +93,34 @@ int init(t_state *s, int argc, char **argv, int *count)
 	return (0);
 }
 
+int sort_stack(t_state *s, int count)
+{
+	if (count <= 5)
+	{
+		if (count == 1)
+			return (0);
+		else if (count == 2)
+			sort_2(s);
+		else if (count == 3)
+			sort_3(s);
+		else
+			sort_4_5(s);
+	}
+	else
+	{
+		normalize_array(s->a, count);
+		radix_sort(s);
+	}
+	return (0);
+}
+
+void free_stack(t_state *s, int *values)
+{
+	free(s->a);
+	free(s->b);
+	free(values);
+}
+
 int	main(int argc, char **argv)
 {
 	t_state	s;
@@ -104,31 +129,24 @@ int	main(int argc, char **argv)
 
 	if (input_validation(argc, argv))
 		return (1);
-
 	if (parse(argc, argv, &values))
-		return (error());
+		return (1);
 	if (init(&s, argc, argv, &count))
-		return (error());
-	if (detect_duplicates(s.a, count))
-		return (error());
-	if (argc - 1 <= 5)
 	{
-		if (count == 2)
-			sort_2(&s);
-		else if (count == 3)
-			sort_3(&s);
-		else
-			sort_4_5(&s);
-		free(s.a);
-		free(s.b);
 		free(values);
-		return (0);
+		return (1);
 	}
-	normalize_array(s.a, count);
-	radix_sort(&s);
-	free(s.a);
-	free(s.b);
-	free(values);
+	if (detect_duplicates(s.a, count))
+	{
+		free_stack(&s, values);
+		error();
+	}
+	if (sort_stack(&s, count))
+	{
+		free_stack(&s, values);
+		return (1);
+	}
+	free_stack(&s, values);
 	return (0);
 }
 

@@ -6,7 +6,7 @@
 /*   By: awidor <awidor@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/16 04:19:24 by awidor            #+#    #+#             */
-/*   Updated: 2025/10/16 08:16:13 by awidor           ###   ########.fr       */
+/*   Updated: 2025/10/16 10:38:25 by awidor           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,13 +42,18 @@ void	sort_3(t_state *s)
 void	sort_4_5(t_state *s)
 {
 	int	min_index;
+	int	i;
 
 	while (s->a_size > 3)
 	{
 		min_index = 0;
-		for (int i = 1; i < s->a_size; i++)
+		i = 1;
+		while (i < s->a_size)
+		{
 			if (s->a[i] < s->a[min_index])
 				min_index = i;
+			i++;
+		}
 		while (min_index > 0)
 		{
 			ra(s);
