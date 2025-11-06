@@ -6,7 +6,7 @@
 /*   By: awidor <awidor@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/11 20:43:42 by awidor            #+#    #+#             */
-/*   Updated: 2025/11/06 05:01:53 by awidor           ###   ########.fr       */
+/*   Updated: 2025/11/06 05:16:10 by awidor           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,5 +37,11 @@ int		limit_check(const char *nptr);
 void	sort_2(t_state *s);
 void	sort_3(t_state *s);
 void	sort_4_5(t_state *s);
+
+void	error(void);
+int		is_valid_number(const char *str);
+int		input_validation(int argc, char **argv);
+int		detect_duplicates(int *arr, int n);
+int		parse(int argc, char **argv, int **values);
 
 #endif
