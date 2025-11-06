@@ -6,7 +6,7 @@
 /*   By: awidor <awidor@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/13 17:26:36 by awidor            #+#    #+#             */
-/*   Updated: 2025/10/16 04:43:22 by awidor           ###   ########.fr       */
+/*   Updated: 2025/11/06 05:02:04 by awidor           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,7 @@ void	rra(t_state *s)
 
 void	sa(t_state *s)
 {
-	int tmp;
+	int	tmp;
 
 	if (s->a_size < 2)
 		return ;

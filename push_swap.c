@@ -6,7 +6,7 @@
 /*   By: awidor <awidor@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/11 17:41:52 by awidor            #+#    #+#             */
-/*   Updated: 2025/10/16 10:48:18 by awidor           ###   ########.fr       */
+/*   Updated: 2025/11/06 05:00:49 by awidor           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,24 @@ int	detect_duplicates(int *arr, int n)
 	return (0);
 }
 
+static int	is_valid_number(const char *str)
+{
+	int	i;
+
+	i = 0;
+	while (str[i] == ' ' || (str[i] >= '\t' && str[i] <= '\r'))
+		i++;
+	if (str[i] == '+' || str[i] == '-')
+		i++;
+	if (!ft_isdigit(str[i]))
+		return (0);
+	while (ft_isdigit(str[i]))
+		i++;
+	if (str[i] != '\0')
+		return (0);
+	return (1);
+}
+
 int	input_validation(int argc, char **argv)
 {
 	int	i;
@@ -48,18 +66,18 @@ int	input_validation(int argc, char **argv)
 		return (1);
 	while (i < argc - 1)
 	{
-		if (limit_check(argv[i + 1]))
+		if (!is_valid_number(argv[i + 1]) || limit_check(argv[i + 1]))
 			error();
 		i++;
 	}
 	return (0);
 }
 
-int parse(int argc, char **argv, int **values)
+int	parse(int argc, char **argv, int **values)
 {
-	int i;
+	int	i;
+
 	i = 0;
-	
 	*values = malloc(sizeof(int) * (argc - 1));
 	if (*values == NULL)
 		error();
@@ -68,15 +86,14 @@ int parse(int argc, char **argv, int **values)
 		(*values)[i] = ft_atoi(argv[i + 1]);
 		i++;
 	}
-	(*values)[i] = '\0';
 	return (0);
 }
 
-int init(t_state *s, int argc, char **argv, int *count)
+int	init(t_state *s, int argc, char **argv, int *count)
 {
-	int i;
-	i = 0;
+	int	i;
 
+	i = 0;
 	*count = argc - 1;
 	s->a = malloc(sizeof(int) * *count);
 	s->b = malloc(sizeof(int) * *count);
@@ -93,7 +110,7 @@ int init(t_state *s, int argc, char **argv, int *count)
 	return (0);
 }
 
-int sort_stack(t_state *s, int count)
+int	sort_stack(t_state *s, int count)
 {
 	if (count <= 5)
 	{
@@ -114,7 +131,7 @@ int sort_stack(t_state *s, int count)
 	return (0);
 }
 
-void free_stack(t_state *s, int *values)
+void	free_stack(t_state *s, int *values)
 {
 	free(s->a);
 	free(s->b);
