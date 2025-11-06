@@ -114,3 +114,17 @@ void	normalize_array(int *arr, int n)
 	free(sorted);
 	free(normalized);
 }
+
+int	is_sorted(t_state *s)
+{
+	int	i;
+
+	i = 0;
+	while (i < s->a_size - 1)
+	{
+		if (s->a[i] > s->a[i + 1])
+			return (0);
+		i++;
+	}
+	return (1);
+}

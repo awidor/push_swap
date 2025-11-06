@@ -33,6 +33,7 @@ void	bubble_sort(int *arr, int n);
 void	normalize_array(int *arr, int n);
 void	radix_sort(t_state *s);
 int		limit_check(const char *nptr);
+int		is_sorted(t_state *s);
 
 void	sort_2(t_state *s);
 void	sort_3(t_state *s);

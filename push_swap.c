@@ -35,6 +35,8 @@ int	init(t_state *s, int argc, char **argv, int *count)
 
 int	sort_stack(t_state *s, int count)
 {
+	if (is_sorted(s))
+		return (0);
 	if (count <= 5)
 	{
 		if (count == 1)
