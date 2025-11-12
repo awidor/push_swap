@@ -6,7 +6,7 @@
 /*   By: awidor <awidor@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/13 17:27:41 by awidor            #+#    #+#             */
-/*   Updated: 2025/11/06 05:00:52 by awidor           ###   ########.fr       */
+/*   Updated: 2025/11/12 18:00:45 by awidor           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,32 +87,27 @@ void	do_normalize(int *arr, int *sorted, int *normalized, int n)
 	}
 }
 
-void	normalize_array(int *arr, int n)
+int	normalize_array(int *arr, int n)
 {
-	int	i;
 	int	*sorted;
 	int	*normalized;
 
 	sorted = malloc(sizeof(int) * n);
+	if (sorted == NULL)
+		return (1);
 	normalized = malloc(sizeof(int) * n);
-	if (sorted == NULL || normalized == NULL)
-		return ;
-	i = 0;
-	while (i < n)
+	if (normalized == NULL)
 	{
-		sorted[i] = arr[i];
-		i++;
+		free(sorted);
+		return (1);
 	}
+	ft_memcpy(sorted, arr, sizeof(int) * n);
 	bubble_sort(sorted, n);
 	do_normalize(arr, sorted, normalized, n);
-	i = 0;
-	while (i < n)
-	{
-		arr[i] = normalized[i];
-		i++;
-	}
+	ft_memcpy(arr, normalized, sizeof(int) * n);
 	free(sorted);
 	free(normalized);
+	return (0);
 }
 
 int	is_sorted(t_state *s)
