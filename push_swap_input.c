@@ -6,13 +6,13 @@
 /*   By: awidor <awidor@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/06 05:07:25 by awidor            #+#    #+#             */
-/*   Updated: 2025/11/20 13:17:41 by awidor           ###   ########.fr       */
+/*   Updated: 2025/11/20 23:13:16 by awidor           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-int	is_valid_number(const char *str)
+static int	is_valid_number(const char *str)
 {
 	int	i;
 
@@ -72,23 +72,34 @@ static void	fill_stack(t_state *s, char **argv, int count, char **split_to_free)
 		error_free(s, split_to_free);
 }
 
-void	process_args(int argc, char **argv, t_state *s)
+static void	process_string_arg(char *arg, t_state *s)
 {
 	char	**split;
 	int		count;
 
-	split = NULL;
-	if (argc == 2)
+	if (arg[0] == '\0')
+		error();
+	split = ft_split(arg, ' ');
+	if (!split)
+		error();
+	count = 0;
+	while (split[count])
+		count++;
+	if (count == 0)
 	{
-		split = ft_split(argv[1], ' ');
-		if (!split)
-			error();
-		count = 0;
-		while (split[count])
-			count++;
-		fill_stack(s, split, count, split);
 		free_split(split);
+		error();
 	}
+	fill_stack(s, split, count, split);
+	free_split(split);
+}
+
+void	process_args(int argc, char **argv, t_state *s)
+{
+	int	count;
+
+	if (argc == 2)
+		process_string_arg(argv[1], s);
 	else
 	{
 		count = argc - 1;

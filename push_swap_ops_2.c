@@ -1,50 +1,49 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   push_swap_radix.c                                  :+:      :+:    :+:   */
+/*   push_swap_ops_2.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: awidor <awidor@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/09/14 17:38:36 by awidor            #+#    #+#             */
-/*   Updated: 2025/09/14 18:46:52 by awidor           ###   ########.fr       */
+/*   Created: 2025/11/20 13:55:00 by awidor            #+#    #+#             */
+/*   Updated: 2025/11/20 23:12:40 by awidor           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-int	max_bits_needed(int n)
+void	rb(t_state *s)
 {
-	int	bits;
+	int	i;
+	int	first;
 
-	bits = 0;
-	while ((n - 1) >> bits)
-		bits++;
-	return (bits);
+	if (s->b_size < 2)
+		return ;
+	first = s->b[0];
+	i = 0;
+	while (i < s->b_size - 1)
+	{
+		s->b[i] = s->b[i + 1];
+		i++;
+	}
+	s->b[s->b_size - 1] = first;
+	ft_putstr_fd("rb\n", 1);
 }
 
-void	radix_sort(t_state *s)
+void	rrb(t_state *s)
 {
-	int	n;
-	int	max_bits;
 	int	i;
-	int	bit;
+	int	last;
 
-	n = s->a_size;
-	max_bits = max_bits_needed(n);
-	bit = 0;
-	while (bit < max_bits)
+	if (s->b_size < 2)
+		return ;
+	last = s->b[s->b_size - 1];
+	i = s->b_size - 1;
+	while (i > 0)
 	{
-		i = 0;
-		while (i < n)
-		{
-			if (((s->a[0] >> bit) & 1) == 0)
-				pb(s);
-			else
-				ra(s);
-			i++;
-		}
-		while (s->b_size)
-			pa(s);
-		bit++;
+		s->b[i] = s->b[i - 1];
+		i--;
 	}
+	s->b[0] = last;
+	ft_putstr_fd("rrb\n", 1);
 }

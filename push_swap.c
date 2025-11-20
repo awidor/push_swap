@@ -6,7 +6,7 @@
 /*   By: awidor <awidor@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/11 17:41:52 by awidor            #+#    #+#             */
-/*   Updated: 2025/11/20 13:12:48 by awidor           ###   ########.fr       */
+/*   Updated: 2025/11/20 23:13:12 by awidor           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int	sort_stack(t_state *s, int count)
 	else
 	{
 		normalize_array(s->a, count);
-		radix_sort(s);
+		sort_chunks(s);
 	}
 	return (0);
 }

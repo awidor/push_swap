@@ -6,7 +6,7 @@
 /*   By: awidor <awidor@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/13 17:27:41 by awidor            #+#    #+#             */
-/*   Updated: 2025/11/12 18:00:45 by awidor           ###   ########.fr       */
+/*   Updated: 2025/11/20 23:13:01 by awidor           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ int	limit_check(const char *nptr)
 	return (0);
 }
 
-void	bubble_sort(int *arr, int n)
+static void	bubble_sort(int *arr, int n)
 {
 	int	i;
 	int	j;
@@ -64,7 +64,7 @@ void	bubble_sort(int *arr, int n)
 	}
 }
 
-void	do_normalize(int *arr, int *sorted, int *normalized, int n)
+static void	do_normalize(int *arr, int *sorted, int *normalized, int n)
 {
 	int	i;
 	int	j;
