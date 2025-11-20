@@ -6,7 +6,7 @@
 /*   By: awidor <awidor@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/11 20:43:42 by awidor            #+#    #+#             */
-/*   Updated: 2025/11/06 05:16:10 by awidor           ###   ########.fr       */
+/*   Updated: 2025/11/20 13:12:06 by awidor           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	rra(t_state *s);
 void	sa(t_state *s);
 
 void	bubble_sort(int *arr, int n);
-void	normalize_array(int *arr, int n);
+int		normalize_array(int *arr, int n);
 void	radix_sort(t_state *s);
 int		limit_check(const char *nptr);
 int		is_sorted(t_state *s);
@@ -40,9 +40,9 @@ void	sort_3(t_state *s);
 void	sort_4_5(t_state *s);
 
 void	error(void);
+void	free_split(char **split);
+void	error_free(t_state *s, char **split);
 int		is_valid_number(const char *str);
-int		input_validation(int argc, char **argv);
-int		detect_duplicates(int *arr, int n);
-int		parse(int argc, char **argv, int **values);
+void	process_args(int argc, char **argv, t_state *s);
 
 #endif

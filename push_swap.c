@@ -6,32 +6,11 @@
 /*   By: awidor <awidor@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/11 17:41:52 by awidor            #+#    #+#             */
-/*   Updated: 2025/11/06 05:16:05 by awidor           ###   ########.fr       */
+/*   Updated: 2025/11/20 13:12:48 by awidor           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
-
-int	init(t_state *s, int argc, char **argv, int *count)
-{
-	int	i;
-
-	i = 0;
-	*count = argc - 1;
-	s->a = malloc(sizeof(int) * *count);
-	s->b = malloc(sizeof(int) * *count);
-	if (!s->a || !s->b)
-		error();
-	s->a_size = *count;
-	s->b_size = 0;
-	i = 0;
-	while (i < *count)
-	{
-		s->a[i] = ft_atoi(argv[i + 1]);
-		i++;
-	}
-	return (0);
-}
 
 int	sort_stack(t_state *s, int count)
 {
@@ -56,39 +35,29 @@ int	sort_stack(t_state *s, int count)
 	return (0);
 }
 
-void	free_stack(t_state *s, int *values)
+void	free_stack(t_state *s)
 {
-	free(s->a);
-	free(s->b);
-	free(values);
+	if (s->a)
+		free(s->a);
+	if (s->b)
+		free(s->b);
 }
 
 int	main(int argc, char **argv)
 {
 	t_state	s;
-	int		*values;
-	int		count;
 
-	if (input_validation(argc, argv))
-		return (1);
-	if (parse(argc, argv, &values))
-		return (1);
-	if (init(&s, argc, argv, &count))
+	if (argc < 2)
+		return (0);
+	s.a = NULL;
+	s.b = NULL;
+	process_args(argc, argv, &s);
+	if (sort_stack(&s, s.a_size))
 	{
-		free(values);
+		free_stack(&s);
 		return (1);
 	}
-	if (detect_duplicates(s.a, count))
-	{
-		free_stack(&s, values);
-		error();
-	}
-	if (sort_stack(&s, count))
-	{
-		free_stack(&s, values);
-		return (1);
-	}
-	free_stack(&s, values);
+	free_stack(&s);
 	return (0);
 }
 
