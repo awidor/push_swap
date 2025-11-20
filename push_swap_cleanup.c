@@ -6,7 +6,7 @@
 /*   By: awidor <awidor@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/20 13:30:00 by awidor            #+#    #+#             */
-/*   Updated: 2025/11/20 13:15:07 by awidor           ###   ########.fr       */
+/*   Updated: 2025/11/20 23:27:53 by awidor           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,9 @@ void	free_split(char **split)
 	int	i;
 
 	i = 0;
-	if (!split)
+	if (split == NULL)
 		return ;
-	while (split[i])
+	while (split[i] != NULL)
 	{
 		free(split[i]);
 		i++;
@@ -35,11 +35,11 @@ void	error(void)
 
 void	error_free(t_state *s, char **split)
 {
-	if (split)
+	if (split != NULL)
 		free_split(split);
-	if (s->a)
+	if (s->a != NULL)
 		free(s->a);
-	if (s->b)
+	if (s->b != NULL)
 		free(s->b);
 	error();
 }

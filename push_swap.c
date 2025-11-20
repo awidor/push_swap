@@ -6,7 +6,7 @@
 /*   By: awidor <awidor@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/11 17:41:52 by awidor            #+#    #+#             */
-/*   Updated: 2025/11/20 23:13:12 by awidor           ###   ########.fr       */
+/*   Updated: 2025/11/20 23:28:08 by awidor           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,8 @@ int	sort_stack(t_state *s, int count)
 	}
 	else
 	{
-		normalize_array(s->a, count);
+		if (normalize_array(s->a, count) != 0)
+			return (1);
 		sort_chunks(s);
 	}
 	return (0);
@@ -37,9 +38,9 @@ int	sort_stack(t_state *s, int count)
 
 void	free_stack(t_state *s)
 {
-	if (s->a)
+	if (s->a != NULL)
 		free(s->a);
-	if (s->b)
+	if (s->b != NULL)
 		free(s->b);
 }
 
@@ -52,7 +53,7 @@ int	main(int argc, char **argv)
 	s.a = NULL;
 	s.b = NULL;
 	process_args(argc, argv, &s);
-	if (sort_stack(&s, s.a_size))
+	if (sort_stack(&s, s.a_size) != 0)
 	{
 		free_stack(&s);
 		return (1);
