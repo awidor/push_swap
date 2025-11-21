@@ -6,7 +6,7 @@
 /*   By: awidor <awidor@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/11 20:43:42 by awidor            #+#    #+#             */
-/*   Updated: 2025/11/20 23:11:33 by awidor           ###   ########.fr       */
+/*   Updated: 2025/11/21 23:38:02 by awidor           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,11 +31,12 @@ void	sa(t_state *s);
 void	rb(t_state *s);
 void	rrb(t_state *s);
 
-
 int		normalize_array(int *arr, int n);
 void	sort_chunks(t_state *s);
 int		limit_check(const char *nptr);
 int		is_sorted(t_state *s);
+int		is_valid_number(const char *str);
+int		check_duplicates(int *arr, int n);
 
 void	sort_2(t_state *s);
 void	sort_3(t_state *s);

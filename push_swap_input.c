@@ -6,103 +6,108 @@
 /*   By: awidor <awidor@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/06 05:07:25 by awidor            #+#    #+#             */
-/*   Updated: 2025/11/20 23:27:27 by awidor           ###   ########.fr       */
+/*   Updated: 2025/11/21 23:37:59 by awidor           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-static int	is_valid_number(const char *str)
+static int	count_split(char **split)
 {
-	int	i;
+	int	count;
 
-	i = 0;
-	while (str[i] == ' ' || (str[i] >= '\t' && str[i] <= '\r'))
-		i++;
-	if (str[i] == '+' || str[i] == '-')
-		i++;
-	if (ft_isdigit(str[i]) == 0)
+	if (split == NULL)
 		return (0);
-	while (ft_isdigit(str[i]))
-		i++;
-	if (str[i] != '\0')
-		return (0);
-	return (1);
+	count = 0;
+	while (split[count] != NULL)
+		count++;
+	return (count);
 }
 
-static int	check_duplicates(int *arr, int n)
+static int	count_numbers(int argc, char **argv)
 {
-	int	i;
-	int	j;
+	int		total;
+	int		i;
+	char	**split;
 
-	i = 0;
-	while (i < n)
+	if (argv == NULL)
+		error();
+	total = 0;
+	i = 1;
+	while (i < argc)
 	{
-		j = i + 1;
-		while (j < n)
+		if (argv[i] == NULL || argv[i][0] == '\0')
+			error();
+		split = ft_split(argv[i], ' ');
+		if (split == NULL)
+			error();
+		if (split[0] == NULL)
 		{
-			if (arr[i] == arr[j])
-				return (1);
-			j++;
+			free_split(split);
+			error();
 		}
+		total += count_split(split);
+		free_split(split);
 		i++;
 	}
-	return (0);
+	return (total);
 }
 
-static void	fill_stack(t_state *s, char **argv, int count, char **split_to_free)
+static void	assign_numbers(t_state *s, char *arg, int *idx)
+{
+	char	**split;
+	int		i;
+
+	if (s == NULL || arg == NULL || idx == NULL)
+		error();
+	split = ft_split(arg, ' ');
+	if (split == NULL)
+		error_free(s, NULL);
+	if (split[0] == NULL)
+		error_free(s, split);
+	i = 0;
+	while (split[i] != NULL)
+	{
+		if (is_valid_number(split[i]) == 0 || limit_check(split[i]) != 0)
+			error_free(s, split);
+		s->a[*idx] = ft_atoi(split[i]);
+		*idx += 1;
+		i++;
+	}
+	free_split(split);
+}
+
+static void	fill_stack(t_state *s, int argc, char **argv, int count)
 {
 	int	i;
+	int	idx;
 
 	s->a = malloc(sizeof(int) * count);
 	s->b = malloc(sizeof(int) * count);
 	if (s->a == NULL || s->b == NULL)
-		error_free(s, split_to_free);
+	{
+		if (s->a != NULL)
+			free(s->a);
+		if (s->b != NULL)
+			free(s->b);
+		error();
+	}
 	s->a_size = count;
 	s->b_size = 0;
-	i = 0;
-	while (i < count)
-	{
-		if (is_valid_number(argv[i]) == 0 || limit_check(argv[i]) != 0)
-			error_free(s, split_to_free);
-		s->a[i] = ft_atoi(argv[i]);
-		i++;
-	}
+	i = 1;
+	idx = 0;
+	while (i < argc)
+		assign_numbers(s, argv[i++], &idx);
 	if (check_duplicates(s->a, count) != 0)
-		error_free(s, split_to_free);
-}
-
-static void	process_string_arg(char *arg, t_state *s)
-{
-	char	**split;
-	int		count;
-
-	if (arg[0] == '\0')
-		error();
-	split = ft_split(arg, ' ');
-	if (split == NULL)
-		error();
-	count = 0;
-	while (split[count] != NULL)
-		count++;
-	if (count == 0)
-	{
-		free_split(split);
-		error();
-	}
-	fill_stack(s, split, count, split);
-	free_split(split);
+		error_free(s, NULL);
 }
 
 void	process_args(int argc, char **argv, t_state *s)
 {
 	int	count;
 
-	if (argc == 2)
-		process_string_arg(argv[1], s);
-	else
-	{
-		count = argc - 1;
-		fill_stack(s, argv + 1, count, NULL);
-	}
+	if (argv == NULL || s == NULL)
+		error();
+	count = count_numbers(argc, argv);
+	fill_stack(s, argc, argv, count);
 }
